@@ -35,7 +35,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             let mut input = Vec::new();
             File::open(&path)?.read_to_end(&mut input)?;
             let png = Png::try_from(input.as_slice())?;
-            let chunk = png.chunks().iter().find(|c| c.chunk_type() == &chunk_type);
+            let chunk = png.chunk_by_type(&chunk_type.to_string());
             let out = chunk
                 .map(|c| c.data())
                 .map(|d| String::from_utf8_lossy(d))
